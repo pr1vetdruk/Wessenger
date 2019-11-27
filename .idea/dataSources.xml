@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="@Sup-OraData1.bryansk.softlab.ru" uuid="d0ffe2f7-6c31-4e55-8906-572e2c00d2da">
+      <driver-ref>oracle</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//Sup-OraData1.bryansk.softlab.ru:1522/db122c1</jdbc-url>
+    </data-source>
+  </component>
+</project>
