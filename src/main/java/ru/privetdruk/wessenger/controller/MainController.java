@@ -1,11 +1,13 @@
 package ru.privetdruk.wessenger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.privetdruk.wessenger.domain.Message;
+import ru.privetdruk.wessenger.domain.User;
 import ru.privetdruk.wessenger.repos.MessagesRepo;
 
 import java.util.List;
@@ -29,9 +31,10 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String text,
+    public String add(@AuthenticationPrincipal User user,
+                      @RequestParam String text,
                       @RequestParam String tag, Map<String, Object> model) {
-        Message message = new Message(text, tag);
+        Message message = new Message(text, tag, user);
         messagesRepo.save(message);
 
         Iterable<Message> messages = messagesRepo.findAll();

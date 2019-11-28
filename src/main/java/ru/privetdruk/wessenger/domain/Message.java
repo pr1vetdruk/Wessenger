@@ -8,7 +8,15 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public Message(String text, String tag) {
+    private String text;
+    private String tag;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    public Message(String text, String tag, User author) {
+        this.author = author;
         this.text = text;
         this.tag = tag;
     }
@@ -16,8 +24,17 @@ public class Message {
     public Message() {
     }
 
-    private String text;
-    private String tag;
+    public User getAuthor() {
+        return author;
+    }
+
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "<none>";
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
     public Long getId() {
         return id;
