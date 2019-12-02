@@ -11,8 +11,8 @@ import ru.privetdruk.wessenger.domain.Role;
 import ru.privetdruk.wessenger.domain.User;
 import ru.privetdruk.wessenger.repos.UserRepo;
 
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -42,6 +42,12 @@ public class UserService implements UserDetailsService {
         user.setActivationCode(UUID.randomUUID().toString());
         userRepo.save(user);
 
+        sendMessage(user);
+
+        return true;
+    }
+
+    private void sendMessage(User user) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format("Hello, %s!\n" +
                     "Welcome to Wessenger. Please visit next link: http://localhost:8080/activate/%s",
@@ -49,8 +55,6 @@ public class UserService implements UserDetailsService {
                     user.getActivationCode());
             mailSender.send(user.getEmail(), user.getActivationCode(), message);
         }
-
-        return true;
     }
 
     public boolean activateUser(String code) {
@@ -63,5 +67,39 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
 
         return true;
+    }
+
+    public List findAll() {
+        return userRepo.findAll();
+    }
+
+    public void saveUser(User user, String username, Map<String, String> form) {
+        user.setUsername(username);
+        Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
+        user.getRoles().clear();
+        for (String key : form.keySet())
+            if (roles.contains(key))
+                user.getRoles().add(Role.valueOf(key));
+
+        userRepo.save(user);
+    }
+
+    public void updateProfile(User user, String password, String email) {
+        String userEmail = user.getEmail();
+        boolean isEmailChanged = (email != null && !email.equals(userEmail) || (userEmail != null && !userEmail.equals(email)));
+
+        if (isEmailChanged) {
+            user.setEmail(email);
+            if (!StringUtils.isEmpty(email)) {
+                user.setActivationCode(UUID.randomUUID().toString());
+                sendMessage(user);
+            }
+
+        }
+
+        if (!StringUtils.isEmpty(password))
+            user.setPassword(password);
+
+        userRepo.save(user);
     }
 }
