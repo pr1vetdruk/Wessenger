@@ -16,14 +16,26 @@
         Add new message
     </a>
 
-    <div class="collapse" id="addNewMessage">
+    <div class="collapse <#if message??>show</#if>" id="addNewMessage">
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" name="text" placeholder="Введите сообщение" class="form-control"/>
+                    <input type="text" name="text" placeholder="Введите сообщение"
+                           class="form-control ${(textError??)?string('is-invalid', '')}"
+                           value="<#if message??>${message.text}</#if>"/>
+                    <#if textError??>
+                        <div class="invalid-feedback">
+                            ${textError}
+                        </div>
+                    </#if>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="tag" placeholder="Тэг" class="form-control"/>
+                    <input type="text" name="tag" placeholder="Тэг" class="form-control" value="<#if message??>${message.tag}</#if>"/>
+                    <#if tagError??>
+                        <div class="invalid-feedback">
+                            ${tagError}
+                        </div>
+                    </#if>
                 </div>
                 <div class="form-group">
                     <div class="custom-file">
