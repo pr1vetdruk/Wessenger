@@ -8,5 +8,11 @@
       <jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
       <jdbc-url>jdbc:oracle:thin:@//Sup-OraData1.bryansk.softlab.ru:1522/db122c1</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="PostgreSQL - wessenger@localhost" uuid="cbbb3efd-5c10-445a-b222-e0dd5a501f68">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/wessenger</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -30,7 +30,7 @@
                     </#if>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="tag" placeholder="Тэг" class="form-control" value="<#if message??>${message.tag}</#if>"/>
+                    <input type="text" name="tag" placeholder="Тэг" class="form-control ${(tagError??)?string('is-invalid', '')}" value="<#if message??>${message.tag}</#if>"/>
                     <#if tagError??>
                         <div class="invalid-feedback">
                             ${tagError}

@@ -46,8 +46,8 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
-        userRepo.save(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
 
         sendMessage(user);
 
@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
                     "Welcome to Wessenger. Please visit next link: http://localhost:8080/activate/%s",
                     user.getUsername(),
                     user.getActivationCode());
-            mailSender.send(user.getEmail(), user.getActivationCode(), message);
+            mailSender.send(user.getEmail(), "Activation code", message);
         }
     }
 
