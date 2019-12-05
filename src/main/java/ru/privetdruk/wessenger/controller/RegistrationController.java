@@ -24,7 +24,7 @@ public class RegistrationController {
     private final UserService userService;
     private final RestTemplate restTemplate;
 
-    @Value("recaptcha.secret")
+    @Value("${recaptcha.secret}")
     private String secret;
 
     public RegistrationController(UserService userService, RestTemplate restTemplate) {
@@ -48,7 +48,7 @@ public class RegistrationController {
         CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
 
         if (!response.isSuccess()) {
-            model.addAttribute("captchaError", response.getErrorCode());
+            model.addAttribute("captchaError", "" + response.getErrorCode());
         }
 
         boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirmation);
