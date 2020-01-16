@@ -44,7 +44,7 @@ public class RegistrationController {
             @Valid User user,
             BindingResult bindingResult,
             Model model) {
-        String url = String.format(CAPTCHA_URL, secret, captchaResponse);
+        /*String url = String.format(CAPTCHA_URL, secret, captchaResponse);
         CaptchaResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchaResponseDto.class);
 
         if (!response.isSuccess()) {
@@ -62,7 +62,7 @@ public class RegistrationController {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
             return "registration";
-        }
+        }*/
 
         if (!userService.addUser(user)) {
             model.addAttribute("usernameError", "User exists!");
